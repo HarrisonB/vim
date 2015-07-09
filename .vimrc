@@ -18,5 +18,3 @@ cno jj <C-c>l
 vno v <Esc>
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
-
-
