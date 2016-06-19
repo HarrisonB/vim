@@ -12,7 +12,6 @@ Plug 'L9'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'ctrlpvim/ctrlp.vim' " For fuzzy-finding files to open
 Plug 'fs111/pydoc.vim' 
 Plug 'itchyny/lightline.vim'
 Plug 'critiqjo/vim-bufferline'
@@ -23,36 +22,39 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'lervag/vimtex'
+Plug 'junegunn/seoul256.vim' " A beautiful colorscheme!
+Plug 'junegunn/vim-easy-align' " To easily align repeating structures
+Plug 'vimwiki/vimwiki' " A wiki in vim
+Plug 'jonstoler/werewolf.vim' " Changing colorscheme based on time
+Plug 'mhinz/vim-startify' " Show useful menu on vim's startup
+Plug 'edkolev/tmuxline.vim' " Customize tmux status bar in .vimrc
+Plug 'edkolev/promptline.vim' " Customize shell prompt
+Plug 'wsdjeg/vim-cheat' " Open ~/.cheat/ files easily in vim
+Plug 'timakro/vim-searchant' " Highlight *all* of the matches in a search
+
+" Not used very requently:
 Plug 'hail2u/vim-css3-syntax'
-Plug 'mattn/emmet-vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'vimwiki/vimwiki'
-Plug 'jonstoler/werewolf.vim' "Changing colorscheme based on time
-Plug 'mhinz/vim-startify'
-Plug 'edkolev/tmuxline.vim'
+Plug 'mattn/emmet-vim' 
 
 " Required vim-plug
 call plug#end()
 
 filetype plugin indent on
 
-" To temporarily disable a plugin, type this:
-" set runtimepath-=~/.vim/plug/vim-plugin-name
 
+" Colors and other essentials
 set number
-
-" Colors and stuff!
+set hidden
+set tabstop=4
+set shiftwidth=4
 set cursorline
 syntax on
 colo seoul256
 let g:werewolf_day_themes = ['seoul256-light']
 let g:werewolf_night_themes = ['seoul256']
 
-set tabstop=4
-set shiftwidth=4
 
-
+" YouCompleteMe configuration
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_extra_conf_vim_data = ['&filetype']
@@ -61,6 +63,7 @@ if isdirectory(s:clang_library_path)
 	let g:clang_library_path=s:clang_library_path
 endif
 
+" Vimwiki configuration
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki',
 			\'template_path': '~/Dropbox/vimwiki/templates/',
 			\'template_default': 'default',
@@ -71,7 +74,6 @@ let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki',
 " Keymappings
 map <SPACE> <leader>
 " Allows buffers to hide
-set hidden
 nmap <leader>T :enew<CR>
 " Move to next and previous butter
 nmap <leader>l :bnext<CR>
@@ -130,6 +132,7 @@ function! UpdateSkim(status)
 		call system(join(l:cmd + [line('.'), shellescape(l:out)], ' '))
 	endif
 endfunction
+
 " lightline and bufferline settings
 set showtabline=2
 let g:bufferline_active_buffer_left = ''
@@ -242,13 +245,40 @@ let g:tmuxline_powerline_separators = 0
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : '#H',
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '#W %R',
+      \'x'    : '%a %D',
+      \'y'    : '%I:%M %p',
       \'z'    : '#H'
 	  \}
+" sections (a, b, c, x, y, z, warn) are optional
+let g:promptline_preset = {
+        \'a' : [ promptline#slices#cwd() ],
+        \'b' : [ promptline#slices#vcs_branch(), promptline#slices#git_status() ],
+        \'c' : [],
+        \'y' : [],
+        \'warn' : [ promptline#slices#last_exit_code() ]}
 
-" Tmuxline lightline "Start tmuxline with lightline colors
+" available slices:
+"
+" promptline#slices#cwd() - current dir, truncated to 3 dirs. To configure: promptline#slices#cwd({ 'dir_limit': 4 })
+" promptline#slices#vcs_branch() - branch name only. By default, only git branch is enabled. Use promptline#slices#vcs_branch({ 'hg': 1, 'svn': 1, 'fossil': 1}) to enable check for svn, mercurial and fossil branches. Note that always checking if inside a branch slows down the prompt
+" promptline#slices#last_exit_code() - display exit code of last command if not zero
+" promptline#slices#jobs() - display number of shell jobs if more than zero
+" promptline#slices#battery() - display battery percentage (on OSX and linux) only if below 10%. Configure the threshold with promptline#slices#battery({ 'threshold': 25 })
+" promptline#slices#host() - current hostname.  To hide the hostname unless connected via SSH, use promptline#slices#host({ 'only_if_ssh': 1 })
+" promptline#slices#user()
+" promptline#slices#python_virtualenv() - display which virtual env is active (empty is none)
+" promptline#slices#git_status() - count of commits ahead/behind upstream, count of modified/added/unmerged files, symbol for clean branch and symbol for existing untraced files
+"
+" any command can be used in a slice, for example to print the output of whoami in section 'b':
+"       \'b' : [ '$(whoami)'],
+"
+" more than one slice can be placed in a section, e.g. print both host and user in section 'a':
+"       \'a': [ promptline#slices#host(), promptline#slices#user() ],
+"
+" to disable powerline symbols
+let g:promptline_powerline_symbols = 0
+
+
 set noshowmode
