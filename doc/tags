@@ -2,6 +2,7 @@
 :AcpEnable	acp.txt	/*:AcpEnable*
 :AcpLock	acp.txt	/*:AcpLock*
 :AcpUnlock	acp.txt	/*:AcpUnlock*
+MatlabEditionFiles	matlab.txt	/*MatlabEditionFiles*
 acp	acp.txt	/*acp*
 acp-about	acp.txt	/*acp-about*
 acp-author	acp.txt	/*acp-author*
@@ -104,3 +105,10 @@ g:clang_sort_algo	clang_complete.txt	/*g:clang_sort_algo*
 g:clang_trailing_placeholder	clang_complete.txt	/*g:clang_trailing_placeholder*
 g:clang_use_library	clang_complete.txt	/*g:clang_use_library*
 g:clang_user_options	clang_complete.txt	/*g:clang_user_options*
+matlab	matlab.txt	/*matlab*
+matlab-compiler	matlab.txt	/*matlab-compiler*
+matlab-indent	matlab.txt	/*matlab-indent*
+matlab-instal	matlab.txt	/*matlab-instal*
+matlab-matchit	matlab.txt	/*matlab-matchit*
+matlab-syntax	matlab.txt	/*matlab-syntax*
+matlab-tags	matlab.txt	/*matlab-tags*

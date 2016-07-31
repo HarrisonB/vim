@@ -36,6 +36,18 @@ Plug 'timakro/vim-searchant' " Highlight *all* of the matches in a search
 Plug 'hail2u/vim-css3-syntax'
 Plug 'mattn/emmet-vim' 
 
+" Trying out
+Plug 'nvie/vim-flake8'
+Plug 'tpope/vim-unimpaired'
+
+" Neovim
+Plug 'neomake/neomake'
+" function! DoRemote(arg)
+"   UpdateRemotePlugins
+" endfunction
+" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+" Plug 'zchee/deoplete-jedi'
+
 " Required vim-plug
 call plug#end()
 
@@ -55,13 +67,18 @@ let g:werewolf_night_themes = ['seoul256']
 
 
 " YouCompleteMe configuration
-let g:ycm_confirm_extra_conf = 0
+
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_extra_conf_vim_data = ['&filetype']
 let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
 if isdirectory(s:clang_library_path)
 	let g:clang_library_path=s:clang_library_path
 endif
+
+" Neocomplete
+autocmd! BufWritePost * Neomake
+" let g:neomake_open_list = 2
+
 
 " Vimwiki configuration
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki',
@@ -90,7 +107,7 @@ map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 map <leader>k 10k
 map <leader>j 10j
-let &colorcolumn=join(range(81,999),",")  " Sets cols 80s to a different color
+let &colorcolumn=join(range(80,999),",")  " Sets cols 79 to a different color
 
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
